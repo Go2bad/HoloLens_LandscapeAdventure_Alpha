@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: 
     guid: 74f44f9283a5f7043af4bd27afba7c41
   - enabled: 0
-    path: Assets/LandscapeAdventure_MR/Scenes/Custom_Scene.unity
+    path: 
     guid: c179e88523f6df440b39be786598cb60
   - enabled: 1
     path: Assets/LandscapeAdventure_MR/Scenes/Main_Scene.unity

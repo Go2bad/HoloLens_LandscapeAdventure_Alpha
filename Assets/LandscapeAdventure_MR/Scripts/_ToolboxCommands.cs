@@ -4,26 +4,32 @@ using UnityEngine;
 
 public class _ToolboxCommands : MonoBehaviour {
 
-    public GameObject ExpandMenuPrefab;
+    public GameObject MainToolboxPartPrefab;
+
+    private bool isExpandActive = false;
 
 	// Use this for initialization
 	void Start () {
 		
-        if (ExpandMenuPrefab == null)
+        if (MainToolboxPartPrefab == null)
         {
             Debug.Log("The prefab(-s) wasn't / weren't assigned in " + gameObject.name + ".");
         }
 
-        ExpandMenuPrefab.SetActive(false);
+        MainToolboxPartPrefab.SetActive(false);
     }
 
-    void ExpandMenu()
+    public void ExpandMenu()
     {
-        ExpandMenuPrefab.SetActive(true);
+        isExpandActive = !isExpandActive;
+
+        if (isExpandActive)
+        {
+            MainToolboxPartPrefab.SetActive(true);
+        }
+        else
+        {
+            MainToolboxPartPrefab.SetActive(false);
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

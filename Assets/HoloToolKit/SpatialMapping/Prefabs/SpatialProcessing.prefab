@@ -56,9 +56,9 @@ MonoBehaviour:
   limitScanningByTime: 1
   scanTime: 15
   defaultMaterial:
-  - {fileID: 2100000, guid: d698790d3facd3d4289a13fa1243030a, type: 2}
+  - {fileID: 2100000, guid: 718eebaa315335847b4ec633ba848b4b, type: 2}
   secondaryMaterial:
-  - {fileID: 2100000, guid: 4b0f3315a044218428165ca0893aa0b5, type: 2}
+  - {fileID: 2100000, guid: d698790d3facd3d4289a13fa1243030a, type: 2}
   minimumFloors: 1
   minimumWalls: 1
 --- !u!114 &114804436515998876

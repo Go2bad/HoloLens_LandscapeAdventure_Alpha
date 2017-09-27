@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spaceObjectPrefabs:
-  - {fileID: 1221922067496772, guid: 199a5a0adec066b49853dfc855b335a0, type: 2}
+  - {fileID: 0}
+  - {fileID: 1212985438149652, guid: a1a7171ec5c911b428b3e4bd289cba76, type: 2}
+  - {fileID: 1212985438149652, guid: a1a7171ec5c911b428b3e4bd289cba76, type: 2}
   - {fileID: 1221922067496772, guid: 199a5a0adec066b49853dfc855b335a0, type: 2}
   - {fileID: 1221922067496772, guid: 199a5a0adec066b49853dfc855b335a0, type: 2}

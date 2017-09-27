@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PhysicsLayer: 31
   surfaceMaterials:
-  - {fileID: 2100000, guid: d698790d3facd3d4289a13fa1243030a, type: 2}
+  - {fileID: 2100000, guid: 718eebaa315335847b4ec633ba848b4b, type: 2}
   autoStartObserver: 1
   drawVisualMeshes: 1
   castShadows: 0

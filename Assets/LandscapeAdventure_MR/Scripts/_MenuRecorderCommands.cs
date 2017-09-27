@@ -12,11 +12,15 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
     private StringBuilder textSoFar;
     private AudioSource audioSource;
 
-    private _KeywordManager keywordManager;
+    // private _KeywordManager keywordManager;
 
-    public TextMesh TextToDisplay;
-    public TextMesh TextUser;
-    public GameObject InteractionMenuPrefab;
+    public GameObject MainMenuPartPrefab;
+    public GameObject LaterMenuPartPrefab;
+
+    // Recognition of the user's speech.
+    public TextMesh UserText;
+    public TextMesh BriefDescriptionText;
+    public TextMesh UserGuideText;
 
     private string micname = string.Empty;
     private int maxFreq;
@@ -24,9 +28,10 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
 
     private bool IsRecording = false;
     private bool IsPlaying = false;
+    public bool isEdited { get; private set; }
+    private bool isEditedFast = false;
 
-    // +
-    private bool IsActive = false;
+    int tapCount = 0;
 
     new void Awake()
     {
@@ -44,14 +49,13 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
     // Use this for initialization
     void Start() {
 
-        if (TextUser == null || TextToDisplay == null || InteractionMenuPrefab == null)
+        if (MainMenuPartPrefab == null || LaterMenuPartPrefab == null || UserText == null || BriefDescriptionText == null || UserGuideText == null)
         {
-            Debug.Log("Check GameObject's in the Inspector panel for " + gameObject.name + ".");
+            Debug.Log("The prefab(-s) wasn't / weren't assigned in " + gameObject.name + ".");
         }
 
-        keywordManager = this.gameObject.GetComponent<_KeywordManager>();
-
-        InteractionMenuPrefab.SetActive(false);
+        isEdited = false;
+        MainMenuPartPrefab.SetActive(false);
 
         audioSource = this.gameObject.AddComponent<AudioSource>();
         audioSource.spatialize = true;
@@ -63,7 +67,7 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
 
     private void DictationRecognizer_DictationError(string error, int hresult)
     {
-        TextUser.text = "Error:" + "\n" + hresult;
+        UserText.text = "Error:" + "\n" + hresult;
     }
 
     private void DictationRecognizer_DictationComplete(DictationCompletionCause cause)
@@ -71,19 +75,17 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
         if (cause == DictationCompletionCause.TimeoutExceeded)
         {
             Microphone.End(micname);
-            TextUser.text = "Dictation was completed";
         }
 
         if (cause == DictationCompletionCause.NetworkFailure)
         {
             Microphone.End(micname);
-            TextUser.text = "Internet connection was lost. Try again in a little bit";
+            UserText.text = "Internet connection was lost. Try again in a little bit";
         }
 
         if (cause == DictationCompletionCause.Complete)
         {
             Microphone.End(micname);
-            TextUser.text = "Dictation was completed";
         }
     }
 
@@ -91,12 +93,12 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
     {
         textSoFar.Append(text + ".");
 
-        TextUser.text = textSoFar.ToString();
+        UserText.text = textSoFar.ToString();
     }
 
     private void DictationRecognizer_DictationHypothesis(string text)
     {
-        TextUser.text = textSoFar.ToString() + " " + text + "...";
+        UserText.text = textSoFar.ToString() + " " + text + "...";
     }
 
 
@@ -112,6 +114,20 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
         {
             StopPlaying();
         }
+
+        if (isEditedFast)
+        {
+            StartCoroutine(EditNoteRoutine());
+            isEditedFast = false;
+        }
+    }
+
+    private IEnumerator EditNoteRoutine()
+    {
+        isEdited = false;
+        yield return new WaitForSeconds(2.0f);
+        MainMenuPartPrefab.SetActive(true);
+        yield return null;
     }
 
     public void RecordMessage()
@@ -125,7 +141,7 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
 
         textSoFar = null;
         textSoFar = new StringBuilder();
-        TextUser.text = "Dictation is starting. It may take time to display" + "\nyour text at first time but begin speaking now...";
+        UserText.text = "Dictation is starting. It may take time to display" + "\nyour text at first time but begin speaking now...";
     }
 
     public void StopRecording()
@@ -138,8 +154,8 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
             }
 
             Microphone.End(micname);
-            TextToDisplay.text = "Tap on \"play message\" button to play your recording";
-            TextUser.text = "Completed!";
+            UserGuideText.text = "Tap on \"play message\" button to play your recording";
+            // UserText.text = "Completed!";
             IsRecording = false;
 
             StartCoroutine(RestartSpeechSystem());
@@ -154,7 +170,7 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
             yield return null;
         }
 
-        keywordManager.StartRecognizer();
+        // keywordManager.StartRecognizer();
     }
 
     public void PlayMessage()
@@ -162,10 +178,9 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
         if (!IsRecording)
         {
             audioSource.Play();
-            TextToDisplay.text = "Tap on \"stop playing\" button to stop message";
+            UserGuideText.text = "Tap on \"stop playing\" button to stop message";
             IsPlaying = true;
-        }
-        
+        }       
     }
 
     public void StopPlaying()
@@ -173,32 +188,52 @@ public class _MenuRecorderCommands : Singleton<_MenuRecorderCommands> {
         if (!IsRecording)
         {
             audioSource.Stop();
-            TextToDisplay.text = "Tap on \"play message\" button to play your recording again" + "\n" + "or tap on \"record\" button to rewrite your recording";
+            UserGuideText.text = "Tap on \"play message\" button to play your recording again" + "\n" + "or tap on \"record\" button to rewrite your recording";
             IsPlaying = false;
         }
     } 
 
     public void OpenMainMenu()
     {
-        IsActive = !IsActive;
+        tapCount++;
 
-        if (IsActive)
+        if (tapCount == 1)
         {
-            InteractionMenuPrefab.SetActive(true);
+            MainMenuPartPrefab.SetActive(true);
         }
-        else
-        {
-            InteractionMenuPrefab.SetActive(false);
-        }
+    }
+
+    public void DestroyNoteCommand()
+    {
+        Destroy(this.gameObject);
     }
 
     public void SaveNoteCommand()
     {
-        TextToDisplay.text = "Saved!";
+        MainMenuPartPrefab.SetActive(false);
+        isEdited = true;
+
+        int maxCount = 40;
+
+        string fullText = Convert.ToString(UserText);
+        fullText = fullText.Substring(0, maxCount);
+
+        string textOne = fullText.Substring(0, 10);
+        string textTwo = fullText.Substring(10, 20);
+        string textThree = fullText.Substring(20, 30);
+        string textFour = fullText.Substring(30, 40);
+        textFour = textFour.Remove(fullText.LastIndexOf(' '));
+
+        string helper = "\n";
+        
+        BriefDescriptionText.text = textOne + helper
+                                   + textTwo + helper
+                                   + textThree + helper
+                                   + textFour + " ...";
     }
 
-    public void DestroyMenu()
-    {
-        Destroy(this.gameObject);
+    public void EditNote()
+    {               
+        isEditedFast = true;
     }
 }

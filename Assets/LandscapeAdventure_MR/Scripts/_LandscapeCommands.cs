@@ -6,7 +6,8 @@ using HoloToolkit.Unity;
 public class _LandscapeCommands : Singleton<_LandscapeCommands> {
 
     public GameObject InformationPrefab;
-    public GameObject MeshId24;
+    public GameObject MeshId24Prefab;
+    private Interpolator interpolator;
 
     public bool Hit { get; private set; }
 
@@ -17,46 +18,47 @@ public class _LandscapeCommands : Singleton<_LandscapeCommands> {
     private bool IsPlacingMode = false;
     private bool IsInformationEnable = true;
     private float maxGazeDistance = 4.0f;
+    private float lastDistance = 4.0f;
 
     private int layerNumber = 31;
     public int layerNumberConverted { get; private set; }
 
-    Quaternion defaultRotation = Quaternion.identity;
+    private Quaternion defaultRotation = Quaternion.identity;
+    private Vector3 defaultScale = Vector3.zero;
 
     // Use this for initialization
     void Start()
     {
-        if (MeshId24 == null || InformationPrefab)
+        if (MeshId24Prefab == null || InformationPrefab)
         {
             Debug.Log("The prefab(-s) wasn't / weren't assigned in " + gameObject.name + ".");
         }
 
+        Quaternion toQuat = Quaternion.identity;
+
+        interpolator = this.gameObject.AddComponent<Interpolator>();
+
+        interpolator.SmoothLerpToTarget = true;
+        interpolator.SmoothScaleLerpRatio = 0.1f;
+        interpolator.SmoothRotationLerpRatio = 0.1f;
+
+        interpolator.RotationDegreesPerSecond = 20.0f;
+        interpolator.ScalePerSecond = 20.0f;
+
         layerNumberConverted = 1 << layerNumber;
 
         billBoard = this.gameObject.GetComponent<_BillBoard>();
-        tagaLong = MeshId24.gameObject.GetComponent<_Tagalong>();
+        tagaLong = MeshId24Prefab.gameObject.GetComponent<_Tagalong>();
         defaultRotation = this.gameObject.transform.rotation;
+        defaultScale = this.gameObject.transform.localScale;
     }
 
+    
 	public void TappedCommand()
     {
-        IsPlacingMode = !IsPlacingMode;
-
-        if (IsPlacingMode)
-        {
-            tagaLong.enabled = false;
-            billBoard.enabled = true;
-
-            //_SpatialMapping.Instance.DrawVisualMeshes = true;
-        }
-        else
-        {
-            billBoard.enabled = false;
-            tagaLong.enabled = false;
-
-            //_SpatialMapping.Instance.DrawVisualMeshes = false;
-        }
+        ///
     }
+    
 
     public void FollowMeCommand()
     {
@@ -90,28 +92,9 @@ public class _LandscapeCommands : Singleton<_LandscapeCommands> {
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResetModelCommand()
     {
-        if (IsPlacingMode)
-        {
-            Vector3 gazeOrigin = Camera.main.transform.position;
-            Vector3 gazeDirection = Camera.main.transform.forward;
-            // Ray ray = new Ray(gazeOrigin, gazeDirection);
-
-            Hit = Physics.Raycast(gazeOrigin, gazeDirection, out hitInfo, maxGazeDistance, layerNumberConverted);
-
-            HitInfo = hitInfo;
-
-            if (Hit)
-            {
-                this.gameObject.transform.position = hitInfo.point;
-            }
-            else
-            {
-                // this.gameObject.transform.position = ray.GetPoint(maxGazeDistance);
-                this.gameObject.transform.position = gazeOrigin + (gazeDirection * maxGazeDistance);
-            }
-        }
+        interpolator.SetTargetLocalRotation(defaultRotation);
+        interpolator.SetTargetLocalScale(defaultScale);
     }
 }

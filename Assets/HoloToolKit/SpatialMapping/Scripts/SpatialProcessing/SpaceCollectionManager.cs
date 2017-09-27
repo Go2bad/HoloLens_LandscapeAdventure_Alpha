@@ -11,8 +11,34 @@ using UnityEngine;
 /// </summary>
 public class SpaceCollectionManager : Singleton<SpaceCollectionManager>
 {
+    MeshCollider[] colliders;
+
+    private GameObject overrideObject = null;
+
     [Tooltip("A collection of Placeable space object prefabs to generate in the world.")]
     public List<GameObject> spaceObjectPrefabs;
+
+    private void Start()
+    {
+        overrideObject = spaceObjectPrefabs[0];
+        overrideObject.SetActive(false);
+
+        if (spaceObjectPrefabs.Count == 0)
+        {
+            Debug.Log("The prefab(-s) wasn't / weren't assigned in " + gameObject.name + ".");
+        }
+    }
+
+    /*
+    private void MeshColliderChanger(bool isActive)
+    {
+        colliders = spaceObjectPrefabs[0].GetComponentsInChildren<MeshCollider>();
+        foreach (MeshCollider collider in colliders)
+        {
+            collider.enabled = isActive;
+        }
+    }
+    */
 
     /// <summary>
     /// Generates a collection of Placeable objects in the world and sets them on planes that match their affinity.
@@ -75,6 +101,64 @@ public class SpaceCollectionManager : Singleton<SpaceCollectionManager>
            return Vector3.Distance(leftSpot, headPosition).CompareTo(Vector3.Distance(rightSpot, headPosition));
        });
 
+        for (int i = 0; i < spaceObjects.Count; i++)
+        {
+            int index = -1;
+            Collider collider = spaceObjects[i].GetComponent<Collider>();
+
+            if (surfaceType == PlacementSurfaces.Vertical)
+            {
+                // => ?
+                index = FindNearestPlane(surfaces, collider.bounds.size, UsedPlanes, true);
+            }
+            else
+            {
+                index = FindNearestPlane(surfaces, collider.bounds.size, UsedPlanes, false);
+            }
+
+            // If we can't find a good plane we will put the object floating in space.
+            Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * 2.0f + Camera.main.transform.right * (Random.value - 1.0f) * 2.0f;
+            Quaternion rotation = Quaternion.identity;
+
+            // If we do find a good plane we can do something smarter.
+            if (index >= 0)
+            {
+                UsedPlanes.Add(index);
+                // Приравниваем к новой ссылке GameObject'а плоскость из списка, которая прошла проверку, т.е. переменная "index" является номером подходящей плосоксти.
+                GameObject surface = surfaces[index];
+                SurfacePlane plane = surface.GetComponent<SurfacePlane>();
+                position = surface.transform.position + (plane.PlaneThickness * plane.SurfaceNormal);
+                position = AdjustPositionWithSpatialMap(position, plane.SurfaceNormal);
+                rotation = Camera.main.transform.localRotation;
+
+                if (surfaceType == PlacementSurfaces.Vertical)
+                {
+                    // Vertical objects should face out from the wall.
+                    rotation = Quaternion.LookRotation(surface.transform.forward, Vector3.up);
+                }
+                else
+                {
+                    // Horizontal objects should face the user.
+                    rotation = Quaternion.LookRotation(Camera.main.transform.position);
+                    rotation.x = 0f;
+                    rotation.z = 0f;
+                }
+            }
+
+            if (i == 0 && surfaceType == PlacementSurfaces.Horizontal)
+            {
+                overrideObject.transform.position = position + new Vector3(0.0f, 0.2f, 0.0f);
+                overrideObject.SetActive(true);
+            }
+            else
+            {
+                //Vector3 finalPosition = AdjustPositionWithSpatialMap(position, surfaceType);
+                GameObject spaceObject = Instantiate(spaceObjects[i], position, rotation) as GameObject;
+                spaceObject.transform.parent = gameObject.transform;
+            }
+        }
+
+        /*
         foreach (GameObject item in spaceObjects)
         {
             int index = -1;
@@ -123,6 +207,7 @@ public class SpaceCollectionManager : Singleton<SpaceCollectionManager>
             GameObject spaceObject = Instantiate(item, position, rotation) as GameObject;
             spaceObject.transform.parent = gameObject.transform;
         }
+        */
     }    
 
     /// <summary>

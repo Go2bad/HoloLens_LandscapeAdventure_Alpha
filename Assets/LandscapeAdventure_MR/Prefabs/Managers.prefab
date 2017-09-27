@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4377494741582750}
   - component: {fileID: 114855121186589072}
   - component: {fileID: 114854707461197182}
+  - component: {fileID: 114754942005629068}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -41,6 +42,103 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114754942005629068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1181054707679140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923345855d402df4ab55396ea821309a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeysAndActions:
+  - Key: Follow Me
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: FollowMeCommand
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  - Key: Stop Follow Me
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: StopFollowMeCommand
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  - Key: Add new note
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114854707461197182}
+          m_MethodName: AddNewNoteFunction
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  - Key: Show all notes
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114854707461197182}
+          m_MethodName: ShowAllNotes
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  - Key: Hide all notes
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114854707461197182}
+          m_MethodName: HideAllNotes
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
 --- !u!114 &114854707461197182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noteDistance: 0.1
   ParentPrefab: {fileID: 0}
-  MainMenuPrefab: {fileID: 0}
+  MenuRecorderPrefab: {fileID: 0}
 --- !u!114 &114855121186589072
 MonoBehaviour:
   m_ObjectHideFlags: 1

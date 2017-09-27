@@ -33,6 +33,10 @@ public class _InteractibleAction : MonoBehaviour {
 
     private GameObject InstantiatePrefab(GameObject original)
     {
+        if(_GazeManager.Instance.Hit)
+        {
+
+        }
         GameObject originalClone = Instantiate(original);
         originalClone.transform.parent = ParentPrefab.transform;
         originalClone.SetActive(false);

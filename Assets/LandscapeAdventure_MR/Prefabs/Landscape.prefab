@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 33354331829475060}
   - component: {fileID: 23208774900560140}
   - component: {fileID: 64435900734394160}
-  - component: {fileID: 114995222942277162}
   - component: {fileID: 114119181356315328}
   - component: {fileID: 114701082796026820}
   - component: {fileID: 114242978541506812}
@@ -60,7 +59,7 @@ GameObject:
   - component: {fileID: 23741018493956380}
   - component: {fileID: 102687135276670082}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: DescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,6 +76,8 @@ GameObject:
   - component: {fileID: 114442818379963396}
   - component: {fileID: 114804047214335330}
   - component: {fileID: 114874682545747056}
+  - component: {fileID: 65120721048551456}
+  - component: {fileID: 114759843894257772}
   m_Layer: 0
   m_Name: Landscape
   m_TagString: Untagged
@@ -111,7 +112,7 @@ GameObject:
   - component: {fileID: 23261768373367598}
   - component: {fileID: 102786896218322638}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +147,6 @@ GameObject:
   - component: {fileID: 33349798668421328}
   - component: {fileID: 23010811772190684}
   - component: {fileID: 64608855290438138}
-  - component: {fileID: 114740431096196802}
   - component: {fileID: 114562131895113824}
   - component: {fileID: 114189769013589356}
   m_Layer: 0
@@ -167,7 +167,6 @@ GameObject:
   - component: {fileID: 33988649110870266}
   - component: {fileID: 23008638702161550}
   - component: {fileID: 64482573444418076}
-  - component: {fileID: 114824015290153582}
   - component: {fileID: 114159142039108160}
   - component: {fileID: 114096928832027590}
   m_Layer: 0
@@ -197,7 +196,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260508544602292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4580293111580208}
@@ -283,7 +282,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1181109849121650}
   m_LocalRotation: {x: -0, y: 0.000000749014, z: -0, w: 1}
-  m_LocalPosition: {x: -0.072, y: 0.185, z: 0.05}
+  m_LocalPosition: {x: -0.072, y: 0.185, z: 0.044}
   m_LocalScale: {x: 0.0021799998, y: 0.0021799998, z: 0.0021799998}
   m_Children: []
   m_Father: {fileID: 4263579734801754}
@@ -564,6 +563,18 @@ MeshCollider:
   m_InflateMesh: 1
   m_SkinWidth: 0.025
   m_Mesh: {fileID: 4300002, guid: 6a886237207c8d94796395c461f929d3, type: 3}
+--- !u!65 &65120721048551456
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260508544602292}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.05, z: 1}
+  m_Center: {x: 0, y: -0.25, z: 0}
 --- !u!65 &65558093428751196
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -608,7 +619,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1544737288393850}
-  m_Text: Landscape Watrefall
+  m_Text: Landscape Waterefall
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -633,8 +644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722717aa092cb4a4cb8cde6fb8168f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadeDistanceStart: 0.9
-  FadeDistanceEnd: 0.7
+  FadeDistanceStart: 1
+  FadeDistanceEnd: 0.6
   NearPlaneFadeOn: 1
 --- !u!114 &114119181356315328
 MonoBehaviour:
@@ -701,8 +712,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722717aa092cb4a4cb8cde6fb8168f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadeDistanceStart: 0.9
-  FadeDistanceEnd: 0.7
+  FadeDistanceStart: 1
+  FadeDistanceEnd: 0.6
   NearPlaneFadeOn: 1
 --- !u!114 &114242978541506812
 MonoBehaviour:
@@ -715,8 +726,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722717aa092cb4a4cb8cde6fb8168f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadeDistanceStart: 0.9
-  FadeDistanceEnd: 0.7
+  FadeDistanceStart: 1
+  FadeDistanceEnd: 0.6
   NearPlaneFadeOn: 1
 --- !u!114 &114268147631863916
 MonoBehaviour:
@@ -794,22 +805,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Landscape: {fileID: 1260508544602292}
   maxDistanceFromUser: 1.25
-  maxDistanceOfLandsacpeFromUser: 4
+  maxDistanceOfLandsacpeFromUser: 3
   IsLandscape: 1
---- !u!114 &114740431096196802
+--- !u!114 &114759843894257772
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1607972121228214}
+  m_GameObject: {fileID: 1260508544602292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec92328acdf9a9d4babca67d043153c6, type: 3}
+  m_Script: {fileID: 11500000, guid: c70eb6b4521840445b90f851c6426ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentPrefab: {fileID: 0}
-  RotatePrefab: {fileID: 1473098745495618, guid: 34468719cb8c3f14e8ac4841d499ee2a,
-    type: 2}
+  PlacementSurface: 1
+  ObjectsToHide: []
+  PlaceableShadow: {fileID: 2100000, guid: cbecc06d8fc149543b084125f162495f, type: 2}
+  NotPlaceableShadow: {fileID: 2100000, guid: 3a91e89a958a2a4428c03be6f0600e81, type: 2}
+  PlaceableBounds: {fileID: 2100000, guid: 5af33ad751decd54c90c7850c53d2a71, type: 2}
+  NotPlaceableBounds: {fileID: 2100000, guid: c8c7108b5698fc04ba39075b405e2437, type: 2}
 --- !u!114 &114804047214335330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -822,21 +836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InformationPrefab: {fileID: 1522045034704788}
-  MeshId24: {fileID: 1178440670548268}
---- !u!114 &114824015290153582
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1784868547549374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec92328acdf9a9d4babca67d043153c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ParentPrefab: {fileID: 0}
-  RotatePrefab: {fileID: 1473098745495618, guid: 34468719cb8c3f14e8ac4841d499ee2a,
-    type: 2}
+  MeshId24Prefab: {fileID: 1178440670548268}
 --- !u!114 &114874682545747056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -849,17 +849,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AxisToRotate: 2
---- !u!114 &114995222942277162
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178440670548268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec92328acdf9a9d4babca67d043153c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ParentPrefab: {fileID: 0}
-  RotatePrefab: {fileID: 1473098745495618, guid: 34468719cb8c3f14e8ac4841d499ee2a,
-    type: 2}

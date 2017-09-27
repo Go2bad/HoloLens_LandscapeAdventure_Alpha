@@ -7,42 +7,39 @@ using HoloToolkit.Unity.InputModule;
 
 public class _MenuRecorderManager : Singleton<_MenuRecorderManager> {
 
-    [Range(0.1f, 0.2f)]
+    [Range(0.05f, 0.25f)]
     public float noteDistance = 0.15f;
 
     public GameObject ParentPrefab;
-    public GameObject MainMenuPrefab;
-    // private GameObject MainMenuPrefabClone;
+    public GameObject MenuRecorderPrefab;  
 
-    private GameObject FocusedObject = null;
+    public GameObject FocusedObject { get; private set; }
 
     private GazeStabilizer gazeStabilizer;
 
-    private List<GameObject> menuList = new List<GameObject>();
+    private List<GameObject> menuRecorderPrefabsList = new List<GameObject>();
 
     private Ray currentRay;
     private RaycastHit hitInfo;
     private float maxGazeDistance = 4.0f;
-    private bool isAddNoteModeEnable = false;
     private bool Hit;
 
 	// Use this for initialization
 	void Start () {
 		
-        if (MainMenuPrefab == null || ParentPrefab == null)
+        if (MenuRecorderPrefab == null || ParentPrefab == null)
         {
-            Debug.Log("The prefab wasn't assigned in " + gameObject.name + ".");
+            Debug.Log("The prefab(-s) wasn't / weren't assigned in " + gameObject.name + ".");
         }
-
-        MainMenuPrefab.SetActive(false);
-
+        MenuRecorderPrefab.SetActive(false);
         gazeStabilizer = this.gameObject.AddComponent<GazeStabilizer>();
-	}
+        FocusedObject = null;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (MainMenuPrefab == null || ParentPrefab == null) { return; }
+        if (MenuRecorderPrefab == null || ParentPrefab == null) { return; }
 
         Vector3 gazeOrigin = Camera.main.transform.position;
         Vector3 gazeDirection = Camera.main.transform.forward;
@@ -76,29 +73,27 @@ public class _MenuRecorderManager : Singleton<_MenuRecorderManager> {
     {
         if (Hit)
         {
-            GameObject MainMenuPrefabClone = Instantiate(MainMenuPrefab);
-            MainMenuPrefabClone.transform.parent = ParentPrefab.transform;
-            MainMenuPrefabClone.transform.position = currentRay.GetPoint(noteDistance);
-            MainMenuPrefabClone.SetActive(true);
-            menuList.Add(MainMenuPrefabClone);
+            GameObject MenuRecorderPrefabClone = Instantiate(MenuRecorderPrefab);           
+            MenuRecorderPrefabClone.transform.position = currentRay.GetPoint(noteDistance);
+            MenuRecorderPrefabClone.transform.parent = ParentPrefab.transform;
+            MenuRecorderPrefabClone.SetActive(true);
+            menuRecorderPrefabsList.Add(MenuRecorderPrefabClone);
         }
     }
 
     public void ShowAllNotes()
     {
-        foreach (GameObject menu in menuList)
+        foreach (GameObject menu in menuRecorderPrefabsList)
         {
-            MeshRenderer renderer = menu.GetComponent<MeshRenderer>();
-            renderer.enabled = true;
+            menu.SetActive(false);
         }
     }
 
     public void HideAllNotes()
     {
-        foreach (GameObject menu in menuList)
+        foreach (GameObject menu in menuRecorderPrefabsList)
         {
-            MeshRenderer renderer = menu.GetComponent<MeshRenderer>();
-            renderer.enabled = false;
+            menu.SetActive(true);
         }
     }
 

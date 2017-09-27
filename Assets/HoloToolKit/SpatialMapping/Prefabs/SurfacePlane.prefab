@@ -105,13 +105,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e2506224b15f64f8be9d9b63d68242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlaneThickness: 0.01
+  PlaneThickness: 0.05
   UpNormalThreshold: 0.9
   FloorBuffer: 0.1
   CeilingBuffer: 0.1
-  WallMaterial: {fileID: 2100000, guid: 4fb28055d69474d4682617e4358bd277, type: 2}
-  FloorMaterial: {fileID: 2100000, guid: e98deff4cdfdc4046bf44eb0abb891c2, type: 2}
-  CeilingMaterial: {fileID: 2100000, guid: 273fd7888dba35740a1288ef0a52298f, type: 2}
-  TableMaterial: {fileID: 2100000, guid: 858c7dc393e7fdf41b5670b5de1c0cfa, type: 2}
-  UnknownMaterial: {fileID: 2100000, guid: bae1975c6cc1102479714dcc13f298b0, type: 2}
+  WallMaterial: {fileID: 2100000, guid: a85c4a0c0603c5842a4e369a46d84cfc, type: 2}
+  FloorMaterial: {fileID: 2100000, guid: a85c4a0c0603c5842a4e369a46d84cfc, type: 2}
+  CeilingMaterial: {fileID: 2100000, guid: a85c4a0c0603c5842a4e369a46d84cfc, type: 2}
+  TableMaterial: {fileID: 2100000, guid: a85c4a0c0603c5842a4e369a46d84cfc, type: 2}
+  UnknownMaterial: {fileID: 2100000, guid: a85c4a0c0603c5842a4e369a46d84cfc, type: 2}
   PlaneType: 16
